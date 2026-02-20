@@ -2,6 +2,13 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## [0.2.0] - 2026-02-20
+
+### Added
+
+- add automated semantic releases and conventional commit linting
+
+
 ## [0.1.0] - 2026-02-20
 
 ### Added
