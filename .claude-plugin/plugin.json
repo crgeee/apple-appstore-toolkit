@@ -1,6 +1,6 @@
 {
   "name": "apple-appstore-toolkit",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Comprehensive App Store readiness review toolkit that uses specialized agents to ensure React Native and Swift/Xcode apps meet Apple's App Store requirements before submission",
   "author": {
     "name": "Christopher Gonzalez"
