@@ -171,8 +171,10 @@ jobs:
           git commit -m "chore(release): bump version to v${NEW_VERSION}"
           git push origin "$branch"
 
-          gh pr create \
+          pr_url=$(gh pr create \
             --title "chore(release): v${NEW_VERSION}" \
             --body "Automated version bump to v${NEW_VERSION}. Tag and release already created." \
             --base main \
-            --head "$branch"
+            --head "$branch")
+
+          gh pr merge "$pr_url" --squash --auto
