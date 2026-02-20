@@ -2,6 +2,17 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## [0.2.1] - 2026-02-20
+
+### Changed
+
+- bump version to v0.2.0
+
+### Fixed
+
+- add homepage, repository, and license to plugin manifest
+
+
 ## [0.2.0] - 2026-02-20
 
 ### Added
