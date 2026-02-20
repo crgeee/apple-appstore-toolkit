@@ -203,9 +203,11 @@ Contributions are welcome! If you find a missing check, a false positive, or wan
 
 1. Fork the repository
 2. Create a feature branch
-3. Make your changes
+3. Make your changes using [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, etc.)
 4. Test against a real iOS project with `claude --plugin-dir .`
 5. Submit a pull request
+
+Releases are fully automated — `feat:` commits trigger a MINOR release, `fix:` commits trigger a PATCH release. See [RELEASING.md](RELEASING.md) for details.
 
 ### Areas for Contribution
 
