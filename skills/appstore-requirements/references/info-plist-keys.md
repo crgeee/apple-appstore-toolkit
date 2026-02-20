@@ -1,5 +1,7 @@
 # Info.plist Keys, Entitlements & Configuration Reference
 
+> Last updated: February 2026 | Based on Apple App Store Review Guidelines (November 2025 update)
+
 ## Privacy Usage Description Keys
 
 Every access to a protected resource requires a usage description key in Info.plist with a **specific, non-generic** string. Vague strings like "This app needs access" trigger immediate rejection.

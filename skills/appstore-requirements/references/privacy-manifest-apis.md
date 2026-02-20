@@ -1,5 +1,7 @@
 # Privacy Manifest & Required Reason APIs Reference
 
+> Last updated: February 2026 | Based on Apple privacy requirements (enforcement expanded February 2025)
+
 ## Privacy Manifest File (PrivacyInfo.xcprivacy)
 
 The privacy manifest is a property list file that **must** be included in every app. Enforcement began May 1, 2024, with expanded SDK requirements since February 12, 2025.

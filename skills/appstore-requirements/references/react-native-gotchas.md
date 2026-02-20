@@ -1,5 +1,7 @@
 # React Native App Store Gotchas Reference
 
+> Last updated: February 2026 | Covers React Native 0.70+ and Expo SDK 50+
+
 ## CodePush / OTA Updates (Guideline 2.5.2)
 
 OTA updates of JavaScript and assets are **permitted** with restrictions:

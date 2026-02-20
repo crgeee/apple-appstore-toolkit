@@ -1,5 +1,7 @@
 # Common App Store Rejection Reasons — Detailed Reference
 
+> Last updated: February 2026 | Based on Apple 2024 Transparency Report and November 2025 guidelines update
+
 ## Guideline 2.1 — App Completeness (~40% of rejections)
 
 **What Apple checks:**

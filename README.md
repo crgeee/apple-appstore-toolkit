@@ -1,14 +1,66 @@
 # Apple App Store Toolkit
 
-A comprehensive Claude Code plugin that reviews iOS apps (React Native and Swift/Xcode) for Apple App Store readiness using specialized review agents.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Plugin: Claude Code](https://img.shields.io/badge/Plugin-Claude%20Code-blueviolet)](https://claude.com/claude-code)
+[![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-green)](CHANGELOG.md)
 
-## Overview
+A Claude Code plugin that reviews iOS apps for Apple App Store readiness using 8 specialized review agents. Supports both **React Native** and **Swift/Xcode** projects.
 
-Apple rejects approximately 25% of all App Store submissions. This toolkit catches common rejection issues during development — before you submit for review.
+## Why?
 
-It uses **8 specialized agents**, each focused on a different compliance area, orchestrated by a single command that detects your project type and runs the appropriate reviews.
+Apple rejects approximately **25% of all App Store submissions** (1.93 million out of 7.77 million in 2024). The top causes — missing privacy manifests, incorrect Info.plist keys, absent restore-purchases buttons — are all detectable before you submit.
 
-## Features
+This toolkit catches those issues during development so you don't waste days waiting for a rejection email.
+
+## Prerequisites
+
+- [Claude Code](https://claude.com/claude-code) CLI installed
+- An iOS project (React Native or Swift/Xcode) in your working directory
+
+## Quick Start
+
+```bash
+# Clone the plugin
+git clone https://github.com/crgeee/apple-appstore-toolkit.git
+
+# Run Claude Code with the plugin against your iOS project
+cd /path/to/your-ios-app
+claude --plugin-dir /path/to/apple-appstore-toolkit
+```
+
+Then run the review:
+
+```
+/apple-appstore-toolkit:review-app
+```
+
+## How It Works
+
+```
+/review-app command
+       │
+       ├── Detects project type (React Native vs Swift/Xcode)
+       │
+       ├── Launches specialized agents (parallel by default)
+       │   ├── info-plist-analyzer
+       │   ├── privacy-compliance-reviewer
+       │   ├── ui-ux-guidelines-reviewer
+       │   ├── performance-stability-reviewer
+       │   ├── assets-metadata-reviewer
+       │   ├── iap-compliance-reviewer
+       │   ├── security-reviewer
+       │   └── react-native-reviewer  (only for RN projects)
+       │
+       └── Aggregates findings into a unified report
+           ├── Critical Issues (will cause rejection)
+           ├── Important Issues (likely rejection)
+           ├── Advisory (best practices)
+           └── Passed Checks
+```
+
+Each agent runs independently with its own scope, then results are combined by severity. Every issue includes the **file location**, a **concrete fix suggestion**, and the **Apple guideline reference**.
+
+## Agents
 
 | Agent | Focus Area |
 |-------|-----------|
@@ -19,17 +71,15 @@ It uses **8 specialized agents**, each focused on a different compliance area, o
 | `assets-metadata-reviewer` | App icons (alpha channel detection), asset catalog, metadata validation |
 | `iap-compliance-reviewer` | StoreKit, restore purchases, subscription terms, external payment detection |
 | `security-reviewer` | Code signing, hardcoded secrets, data protection, keychain, provisioning |
-| `react-native-reviewer` | CodePush, Hermes engine, native splash screen, WebView-only detection, native module permissions |
+| `react-native-reviewer` | CodePush, Hermes engine, native splash screen, WebView-only detection |
 
 ## Usage
 
-### Full Review (Recommended)
+### Full Review (default — parallel)
 
 ```
 /apple-appstore-toolkit:review-app
 ```
-
-Runs all applicable agents in parallel. Automatically detects whether your project is React Native or native Swift/Xcode.
 
 ### Sequential Review
 
@@ -37,75 +87,134 @@ Runs all applicable agents in parallel. Automatically detects whether your proje
 /apple-appstore-toolkit:review-app sequential
 ```
 
-Runs agents one at a time for easier reading.
-
 ### Targeted Review
 
 ```
-/apple-appstore-toolkit:review-app privacy security
-/apple-appstore-toolkit:review-app plist
-/apple-appstore-toolkit:review-app reactnative
-/apple-appstore-toolkit:review-app iap assets
+/apple-appstore-toolkit:review-app privacy security    # specific agents
+/apple-appstore-toolkit:review-app plist               # single agent
+/apple-appstore-toolkit:review-app reactnative         # RN-specific checks
+/apple-appstore-toolkit:review-app iap assets          # multiple agents
 ```
 
 ### Available Aspects
 
-`plist`, `privacy`, `uiux`, `performance`, `assets`, `iap`, `security`, `reactnative`, `all`, `sequential`
+| Aspect | Agent |
+|--------|-------|
+| `plist` | info-plist-analyzer |
+| `privacy` | privacy-compliance-reviewer |
+| `uiux` | ui-ux-guidelines-reviewer |
+| `performance` | performance-stability-reviewer |
+| `assets` | assets-metadata-reviewer |
+| `iap` | iap-compliance-reviewer |
+| `security` | security-reviewer |
+| `reactnative` | react-native-reviewer |
+| `all` | All applicable agents (default) |
+| `sequential` | Run one at a time instead of parallel |
 
-## Output
+## Example Output
 
-Each agent produces findings organized by severity:
+```markdown
+# App Store Readiness Report
 
-- **Critical** — Will cause rejection. Fix before submitting.
-- **Important** — Likely rejection. Should fix.
-- **Advisory** — Best practice recommendation.
+**Project Type:** React Native (Expo)
+**Agents Run:** 8 of 8
+**Overall Assessment:** Needs Work
 
-Each issue includes the file location, a concrete fix suggestion, and the relevant Apple guideline reference.
+## Critical Issues (3 found)
 
-## Installation
+- [privacy-compliance-reviewer]: Missing PrivacyInfo.xcprivacy file
+  Fix: Create PrivacyInfo.xcprivacy with NSPrivacyAccessedAPITypes
+       declaring UserDefaults usage (reason code CA92.1)
+  Guideline: 5.1.1
 
-### Local Testing
+- [info-plist-analyzer]: NSCameraUsageDescription missing but
+  expo-camera is installed
+  Fix: Add to app.json: "ios": { "infoPlist": {
+       "NSCameraUsageDescription": "Used to scan documents" }}
+  Guideline: 5.1.1
 
-```bash
-claude --plugin-dir /path/to/apple-appstore-toolkit
+- [assets-metadata-reviewer]: App icon has alpha channel
+  Fix: Re-export icon as PNG without transparency
+  Guideline: ITMS-90717
+
+## Important Issues (2 found)
+...
 ```
-
-### Project Installation
-
-Copy the plugin to your project:
-
-```bash
-cp -r apple-appstore-toolkit /path/to/your-project/.claude-plugin/
-```
-
-## Supported Project Types
-
-- **React Native** (bare and Expo)
-- **Swift / Xcode** (native iOS)
-
-The toolkit automatically detects the project type and adjusts its analysis accordingly.
 
 ## What It Checks
 
-Based on Apple's published rejection data and current (2025-2026) App Store Review Guidelines:
+Based on Apple's published rejection data and current App Store Review Guidelines:
 
 - Info.plist privacy keys match framework imports
-- PrivacyInfo.xcprivacy exists and declares Required Reason APIs
+- PrivacyInfo.xcprivacy exists and declares Required Reason APIs (~30 API symbols across 5 categories)
 - App Tracking Transparency properly implemented
-- Third-party SDK privacy manifest compliance
+- Third-party SDK privacy manifest compliance (Apple's 86-SDK list)
 - Launch screen storyboard configured (not static images)
-- App icons have no alpha channel/transparency
-- No hardcoded secrets or API keys
-- App Transport Security properly configured
+- App icons: PNG format, no alpha channel, correct dimensions
+- No hardcoded secrets or API keys in source code
+- App Transport Security properly configured (HTTPS enforced)
 - IPv6 compatibility (no hardcoded IP addresses)
 - StoreKit restore purchases mechanism present
-- Subscription terms and pricing displayed
+- Subscription terms, pricing, and management links displayed
 - Accessibility labels on interactive elements
-- Dynamic Type support
+- Dynamic Type support (no hardcoded font sizes)
 - Touch targets meet 44x44pt minimum
-- No forbidden terms in app metadata
-- React Native-specific: Hermes enabled, native splash screen, no WebView-only patterns
+- No forbidden terms ("beta", "test") in app metadata
+- Account deletion exists when account creation exists
+- AI data sharing consent (November 2025 rule)
+- React Native: Hermes enabled, native splash screen, no WebView-only patterns, CodePush compliance
+
+## Supported Project Types
+
+- **React Native** — bare workflow and Expo (managed and bare)
+- **Swift / Xcode** — native iOS apps
+
+The toolkit automatically detects the project type by scanning for `package.json` (React Native), `app.json` (Expo), or `.xcodeproj`/`.xcworkspace` (native).
+
+## Installation
+
+### Option 1: Clone and reference
+
+```bash
+git clone https://github.com/crgeee/apple-appstore-toolkit.git
+claude --plugin-dir /path/to/apple-appstore-toolkit
+```
+
+### Option 2: Add to your project
+
+```bash
+git clone https://github.com/crgeee/apple-appstore-toolkit.git /path/to/your-project/.claude-plugins/apple-appstore-toolkit
+```
+
+## Guidelines Coverage
+
+This plugin covers the Apple App Store Review Guidelines as of **November 2025**, including:
+
+- November 2025: AI data sharing consent requirements (Section 5.1.1(ix))
+- November 2025: Anti-cloning rules (Section 4.1(c))
+- January 2026: New age-rating questionnaire
+- April 2026: Xcode 26 / iOS 26 SDK mandate
+
+Apple updates their guidelines approximately twice per year. See [CHANGELOG.md](CHANGELOG.md) for update history.
+
+## Contributing
+
+Contributions are welcome! If you find a missing check, a false positive, or want to add coverage for a new guideline:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test against a real iOS project with `claude --plugin-dir .`
+5. Submit a pull request
+
+### Areas for Contribution
+
+- Additional agent checks based on real-world rejections
+- False positive reduction (adding negative guidance)
+- New Apple guideline coverage as policies change
+- React Native library-specific checks
+- Expo-specific configuration validation
 
 ## License
 
-MIT
+[MIT](LICENSE)
