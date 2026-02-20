@@ -5,6 +5,9 @@
   "author": {
     "name": "Christopher Gonzalez"
   },
+  "homepage": "https://github.com/crgeee/apple-appstore-toolkit",
+  "repository": "https://github.com/crgeee/apple-appstore-toolkit",
+  "license": "MIT",
   "keywords": [
     "apple",
     "app-store",
