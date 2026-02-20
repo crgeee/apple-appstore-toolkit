@@ -12,79 +12,114 @@ Run a comprehensive Apple App Store readiness review using multiple specialized 
 
 ## Review Workflow:
 
-1. **Detect Project Type**
-   - Check for `package.json` with `react-native` dependency → React Native project
-   - Check for `.xcodeproj` or `.xcworkspace` → Xcode project
-   - Check for `app.json` with `expo` → Expo/React Native project
-   - Report detected type to user
+### Step 1: Detect Project Type
 
-2. **Available Review Aspects:**
+Run these checks to determine the project type:
 
-   - **plist** - Info.plist keys, usage descriptions, entitlements, background modes, launch screen
-   - **privacy** - Privacy manifest, Required Reason APIs, ATT, third-party SDK manifests, AI data sharing
-   - **uiux** - HIG compliance, accessibility, Dynamic Type, touch targets, iPad multitasking
-   - **performance** - ATS enforcement, IPv6, HTTP URLs, network configuration
-   - **assets** - App icons (alpha channel), asset catalog, metadata validation
-   - **iap** - StoreKit usage, restore purchases, subscription terms, payment rules
-   - **security** - Code signing, data protection, keychain, hardcoded secrets
-   - **reactnative** - CodePush, Hermes, native splash, WebView-only, native module permissions
-   - **all** - Run all applicable reviews (default)
-   - **sequential** - Run agents one at a time instead of parallel
+- Search for `package.json` containing `"react-native"` or `"expo"` → **React Native**
+- Search for `app.json` containing `"expo"` → **Expo/React Native**
+- Search for `*.xcodeproj` or `*.xcworkspace` → **Xcode project**
+- If both exist → **React Native with native modules**
 
-3. **Determine Applicable Reviews**
+Report the detected type to the user before proceeding.
 
-   Based on project type:
-   - **Always run**: info-plist-analyzer, privacy-compliance-reviewer, ui-ux-guidelines-reviewer, performance-stability-reviewer, assets-metadata-reviewer, security-reviewer
-   - **If StoreKit/IAP detected**: iap-compliance-reviewer
-   - **If React Native detected**: react-native-reviewer
-   - **Default**: Run all applicable agents
+### Step 2: Detect IAP Usage
 
-4. **Launch Review Agents**
+Before dispatching agents, check if the project uses in-app purchases:
 
-   **Default: Parallel** (all agents simultaneously for speed):
-   - Launch all applicable agents at once using Task tool
-   - Results return together for comprehensive overview
-   - User can pass `sequential` to run one at a time
+- Search for: `StoreKit`, `SKPaymentQueue`, `SKProduct`, `Product.products`, `react-native-iap`, `react-native-purchases`, `expo-in-app-purchases`, `RevenueCat`
+- If ANY are found → include `iap-compliance-reviewer`
+- If NONE found → skip `iap-compliance-reviewer` and note "IAP: Not detected — skipping IAP review"
 
-   **Sequential** (user requests `sequential`):
-   - Run agents one at a time
-   - Easier to read and act on incrementally
-   - Good for interactive review sessions
+### Step 3: Parse Arguments
 
-5. **Aggregate Results**
+**Available aspects:**
+- `plist` → info-plist-analyzer
+- `privacy` → privacy-compliance-reviewer
+- `uiux` → ui-ux-guidelines-reviewer
+- `performance` → performance-stability-reviewer
+- `assets` → assets-metadata-reviewer
+- `iap` → iap-compliance-reviewer
+- `security` → security-reviewer
+- `reactnative` → react-native-reviewer
+- `all` → all applicable agents (default)
+- `sequential` → modifier: run one at a time instead of parallel
 
-   After all agents complete, compile findings into a unified report:
+If no arguments or `all`: run all applicable agents based on Step 1 and Step 2 detection.
 
-   ```markdown
-   # App Store Readiness Report
+### Step 4: Determine Agent List
 
-   **Project Type:** [React Native / Swift-Xcode]
-   **Agents Run:** [count] of [total]
-   **Overall Assessment:** [Ready / Needs Work / Not Ready]
+**Always include** (for all iOS projects):
+1. info-plist-analyzer
+2. privacy-compliance-reviewer
+3. ui-ux-guidelines-reviewer
+4. performance-stability-reviewer
+5. assets-metadata-reviewer
+6. security-reviewer
 
-   ## Critical Issues (X found) — Will cause rejection
-   - [agent-name]: Issue description [file:location]
-     Fix: [concrete fix suggestion]
-     Guideline: [Apple guideline reference]
+**Conditionally include:**
+7. iap-compliance-reviewer — **only if IAP detected** in Step 2
+8. react-native-reviewer — **only if React Native detected** in Step 1
 
-   ## Important Issues (X found) — Likely rejection
-   - [agent-name]: Issue description [file:location]
-     Fix: [concrete fix suggestion]
-     Guideline: [Apple guideline reference]
+### Step 5: Launch Agents
 
-   ## Advisory (X found) — Best practice
-   - [agent-name]: Suggestion [file:location]
-     Recommendation: [suggested improvement]
+**Default: Parallel** — launch all applicable agents simultaneously using the Task tool.
 
-   ## Passed Checks
-   - [What's already compliant]
+When launching each agent, provide it with:
+- The project root path
+- The detected project type (React Native/Expo/Swift)
+- A reminder to follow its confidence scoring (only report findings ≥ 70)
 
-   ## Recommended Action
-   1. Fix all critical issues first
-   2. Address important issues
-   3. Consider advisory improvements
-   4. Re-run review after fixes: /apple-appstore-toolkit:review-app
-   ```
+**If `sequential` is specified:** run agents one at a time in the order listed above.
+
+### Step 6: Aggregate Results
+
+After ALL agents complete, compile a unified report. Do NOT just concatenate agent outputs — synthesize them into a single coherent report.
+
+```markdown
+# App Store Readiness Report
+
+**Project Type:** [React Native (Expo) / React Native (bare) / Swift-Xcode]
+**Agents Run:** [count] of [total applicable]
+**Overall Assessment:** [Ready / Needs Work / Not Ready]
+
+---
+
+## Critical Issues (X found) — Will cause rejection
+- [agent-name] **[confidence]**: Issue description — File: [path:line]
+  Fix: [concrete fix suggestion]
+  Guideline: [Apple guideline number]
+
+## Important Issues (X found) — Likely rejection or review friction
+- [agent-name] **[confidence]**: Issue description — File: [path:line]
+  Fix: [concrete fix suggestion]
+  Guideline: [Apple guideline number]
+
+## Quick Wins — Easy fixes (< 30 min each)
+- [fix description] — File: [path:line]
+
+## Advisory (X found) — Best practice improvements
+Present as a table for scannability:
+| # | Issue | Location | Effort |
+|---|-------|----------|--------|
+| 1 | [description] | [file] | Quick Fix / Moderate / Significant |
+
+## Passed Checks
+- [What's already compliant — give credit for what's done right]
+
+## Recommended Action
+1. Fix critical issues first — these guarantee rejection
+2. Address important issues — high rejection risk
+3. Knock out quick wins — fast improvements
+4. Consider advisory items in priority order
+5. Re-run: `/apple-appstore-toolkit:review-app`
+```
+
+### Assessment Criteria
+
+- **Ready**: 0 Critical, ≤ 2 Important issues
+- **Needs Work**: 0 Critical, 3+ Important issues
+- **Not Ready**: 1+ Critical issues
 
 ## Usage Examples:
 
@@ -101,79 +136,45 @@ Run a comprehensive Apple App Store readiness review using multiple specialized 
 **Specific aspects:**
 ```
 /apple-appstore-toolkit:review-app privacy security
-# Reviews only privacy compliance and security
-
 /apple-appstore-toolkit:review-app plist
-# Reviews only Info.plist configuration
-
 /apple-appstore-toolkit:review-app reactnative
-# Reviews only React Native-specific issues
 ```
 
 **Combined:**
 ```
 /apple-appstore-toolkit:review-app privacy iap sequential
-# Reviews privacy and IAP, one at a time
 ```
 
 ## Agent Descriptions:
 
 **info-plist-analyzer:**
-- Validates all Info.plist keys and usage descriptions
-- Checks entitlements match capabilities
-- Verifies background modes are justified
-- Confirms launch screen storyboard exists
+- Info.plist keys, usage descriptions, entitlements, background modes, launch screen
 
 **privacy-compliance-reviewer:**
-- Validates PrivacyInfo.xcprivacy completeness
-- Detects Required Reason API usage vs declarations
-- Checks ATT implementation
-- Reviews third-party SDK privacy manifests
-- Flags AI data sharing without consent
+- Privacy manifest, Required Reason APIs, ATT, third-party SDK privacy, AI data sharing, account deletion
 
 **ui-ux-guidelines-reviewer:**
-- Checks HIG compliance patterns
-- Verifies accessibility labels and Dynamic Type
-- Validates touch target sizes
-- Checks iPad multitasking support
-- Flags minimum functionality risks (WebView-only)
+- Accessibility, Dynamic Type, touch targets, iPad multitasking, HIG patterns
 
 **performance-stability-reviewer:**
-- Enforces App Transport Security
-- Detects HTTP URLs and missing ATS exceptions
-- Checks IPv6 compatibility (no hardcoded IPs)
-- Reviews network configuration
+- App Transport Security, HTTP URLs, IPv6 compatibility, crash-risk patterns
 
 **assets-metadata-reviewer:**
-- Validates app icon format and dimensions
-- Checks for alpha channel in icons
-- Verifies asset catalog completeness
-- Flags forbidden metadata terms ("beta", "test")
+- App icons (alpha channel), asset catalog, metadata, privacy policy URL
 
 **iap-compliance-reviewer:**
-- Verifies StoreKit implementation
-- Checks for Restore Purchases mechanism
-- Validates subscription terms display
-- Detects external payment for digital goods
+- StoreKit, restore purchases, subscription terms, external payment detection
 
 **security-reviewer:**
-- Checks code signing configuration
-- Detects hardcoded secrets and API keys
-- Reviews data protection settings
-- Validates keychain usage patterns
-- Checks provisioning profile consistency
+- Hardcoded secrets, code signing, data protection, keychain, vulnerabilities
 
 **react-native-reviewer:**
-- Validates CodePush configuration
-- Checks Hermes engine status
-- Verifies native launch screen
-- Detects WebView-only patterns
-- Cross-references native module permissions
+- CodePush, Hermes, native splash screen, WebView-only, dev artifacts, build config
 
 ## Tips:
 
 - **Run early and often**: Review during development, not just before submission
 - **Fix critical first**: Critical issues guarantee rejection
-- **Re-run after fixes**: Verify issues are resolved before submitting
-- **Use specific reviews**: Target known problem areas with specific agent names
-- **Check React Native**: If using React Native, always include the reactnative review
+- **Re-run after fixes**: Verify issues are resolved
+- **Use targeted reviews**: Focus on specific areas when iterating on fixes
+- **Check React Native**: For RN projects, always include the reactnative review
