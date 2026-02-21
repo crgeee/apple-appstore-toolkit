@@ -16,9 +16,11 @@ Releases are **fully automated**. When a PR is merged to `main`:
 
 1. CI parses all new commit messages since the last tag
 2. Determines the version bump (`major` > `minor` > `patch`)
-3. Updates `plugin.json`, README badge, and CHANGELOG.md
-4. Creates a git tag and GitHub release
+3. Creates a git tag and GitHub release with auto-generated release notes
+4. Updates `plugin.json`, README badge, and CHANGELOG.md, then pushes a `chore(release):` commit to `main`
 5. If no `feat:` or `fix:` commits are found, no release is created
+
+The version-bump commit uses the `chore(release):` prefix, which the workflow's skip condition detects to prevent a recursive release cycle.
 
 **You never manually bump versions, edit CHANGELOG.md for releases, or create tags.**
 
@@ -107,14 +109,17 @@ When Apple updates their Review Guidelines:
 
 ## Repository Secrets
 
-The release workflow requires one secret:
+The release workflow uses two tokens:
 
-- **`RELEASE_TOKEN`**: A GitHub fine-grained personal access token (PAT) with `contents: write` permission on this repository. Used by the release workflow to push version bump commits directly to `main` (bypassing branch protection rules that block `GITHUB_TOKEN`).
+- **`RELEASE_TOKEN`** (manual setup required): A GitHub fine-grained personal access token (PAT) with `contents: write` permission on this repository. Used to push version bump commits directly to `main` (bypassing branch protection rules that block `GITHUB_TOKEN`).
+- **`GITHUB_TOKEN`** (automatic): Provided by GitHub Actions. Used by `gh release create` to create the GitHub release. No manual setup required.
 
-To create or rotate:
+To create or rotate `RELEASE_TOKEN`:
 1. Go to GitHub → Settings → Developer settings → Fine-grained personal access tokens
 2. Create a token scoped to `crgeee/apple-appstore-toolkit` with **Contents: Read and write** permission
 3. Add it as a repository secret named `RELEASE_TOKEN` at Settings → Secrets and variables → Actions
+
+> **Partial failure note:** If the tag/release step succeeds but the version bump step fails (e.g., expired `RELEASE_TOKEN`), a GitHub Release will exist without a corresponding version bump commit. In this case, manually run the version bump: update `plugin.json`, README badge, and CHANGELOG.md, then commit as `chore(release): vX.Y.Z`.
 
 ## Pre-Merge Checklist
 

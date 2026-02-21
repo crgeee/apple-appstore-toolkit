@@ -85,7 +85,7 @@ Each agent runs independently with its own scope, then results are combined by s
 | `security-reviewer` | Code signing, hardcoded secrets, data protection, keychain, provisioning |
 | `react-native-reviewer` | CodePush, Hermes engine, native splash screen, WebView-only detection |
 
-> **Note:** The `privacy-compliance-reviewer` uses Claude Opus for higher accuracy on complex privacy manifest analysis. All other agents inherit the model you're running Claude Code with.
+> **Note:** The `privacy-compliance-reviewer` is configured to use the Opus model family (rather than inheriting your session model) for higher accuracy on complex privacy manifest analysis. All other agents inherit the model you're running Claude Code with.
 
 ## Usage
 
@@ -192,7 +192,7 @@ This plugin covers the Apple App Store Review Guidelines as of **November 2025**
 - November 2025: AI data sharing consent requirements (Section 5.1.1(ix))
 - November 2025: Anti-cloning rules (Section 4.1(c))
 - January 2026: New age-rating questionnaire
-- April 2026: Xcode 26 / iOS 26 SDK mandate
+- April 2026: Xcode 26 / iOS 26 SDK mandate *(upcoming — not yet enforced for current submissions)*
 
 Apple updates their guidelines approximately twice per year. See [CHANGELOG.md](CHANGELOG.md) for update history.
 
