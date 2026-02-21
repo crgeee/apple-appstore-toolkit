@@ -1,0 +1,16 @@
+{
+  "name": "apple-appstore-toolkit",
+  "description": "Apple App Store readiness review toolkit for Claude Code",
+  "owner": {
+    "name": "Christopher Gonzalez"
+  },
+  "plugins": [
+    {
+      "name": "apple-appstore-toolkit",
+      "description": "Reviews iOS apps for App Store readiness using 8 specialized agents. Supports React Native and Swift/Xcode.",
+      "source": ".",
+      "category": "development",
+      "homepage": "https://github.com/crgeee/apple-appstore-toolkit"
+    }
+  ]
+}
