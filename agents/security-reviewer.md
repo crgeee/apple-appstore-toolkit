@@ -1,25 +1,6 @@
 ---
 name: security-reviewer
-description: Use this agent when reviewing an iOS app's security configuration including code signing, data protection, keychain usage, hardcoded secrets, or provisioning profiles for App Store compliance. Examples:
-
-  <example>
-  Context: A developer wants to ensure their app has no security issues before submission.
-  user: "Check my app for security issues that could cause App Store rejection"
-  assistant: "I'll use the security-reviewer agent to check for hardcoded secrets, code signing issues, and Apple security requirements."
-  <commentary>
-  The user wants a security audit focused on App Store compliance.
-  </commentary>
-  </example>
-
-  <example>
-  Context: A developer is concerned about accidentally shipping API keys.
-  user: "Make sure I haven't accidentally hardcoded any API keys or secrets in my iOS app"
-  assistant: "I'll use the security-reviewer agent to scan your codebase for hardcoded secrets, API keys, and credentials."
-  <commentary>
-  Hardcoded secret detection is one of this agent's core responsibilities.
-  </commentary>
-  </example>
-
+description: Use this agent when reviewing an iOS app's security configuration including code signing, data protection, keychain usage, hardcoded secrets, or provisioning profiles for App Store compliance. Examples:\n\n<example>\nContext: A developer wants to ensure their app has no security issues before submission.\nuser: "Check my app for security issues that could cause App Store rejection"\nassistant: "I'll use the security-reviewer agent to check for hardcoded secrets, code signing issues, and Apple security requirements."\n<commentary>\nThe user wants a security audit focused on App Store compliance.\n</commentary>\n</example>\n\n<example>\nContext: A developer is concerned about accidentally shipping API keys.\nuser: "Make sure I haven't accidentally hardcoded any API keys or secrets in my iOS app"\nassistant: "I'll use the security-reviewer agent to scan your codebase for hardcoded secrets, API keys, and credentials."\n<commentary>\nHardcoded secret detection is one of this agent's core responsibilities.\n</commentary>\n</example>
 model: inherit
 color: cyan
 tools: ["Read", "Glob", "Grep"]

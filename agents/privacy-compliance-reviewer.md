@@ -1,34 +1,6 @@
 ---
 name: privacy-compliance-reviewer
-description: Use this agent when reviewing an iOS app's privacy compliance including privacy manifests, Required Reason APIs, App Tracking Transparency, third-party SDK privacy requirements, or AI data sharing consent. Examples:
-
-  <example>
-  Context: A developer wants to ensure their app's privacy configuration is complete.
-  user: "Check if my app's privacy manifest and tracking setup is correct"
-  assistant: "I'll use the privacy-compliance-reviewer agent to analyze your privacy manifest, Required Reason APIs, and tracking configuration."
-  <commentary>
-  The user wants privacy compliance validation, which is this agent's specialty.
-  </commentary>
-  </example>
-
-  <example>
-  Context: A developer is getting privacy-related rejections from App Store review.
-  user: "Apple rejected my app for Guideline 5.1.1 privacy issues"
-  assistant: "I'll use the privacy-compliance-reviewer agent to identify the specific privacy compliance gaps."
-  <commentary>
-  Guideline 5.1.1 rejections are privacy-related, matching this agent's focus area.
-  </commentary>
-  </example>
-
-  <example>
-  Context: The review-app command is dispatching agents.
-  user: "/apple-appstore-toolkit:review-app privacy"
-  assistant: "I'll launch the privacy-compliance-reviewer agent to do a thorough privacy audit."
-  <commentary>
-  The user requested a privacy-specific review.
-  </commentary>
-  </example>
-
+description: Use this agent when reviewing an iOS app's privacy compliance including privacy manifests, Required Reason APIs, App Tracking Transparency, third-party SDK privacy requirements, or AI data sharing consent. Examples:\n\n<example>\nContext: A developer wants to ensure their app's privacy configuration is complete.\nuser: "Check if my app's privacy manifest and tracking setup is correct"\nassistant: "I'll use the privacy-compliance-reviewer agent to analyze your privacy manifest, Required Reason APIs, and tracking configuration."\n<commentary>\nThe user wants privacy compliance validation, which is this agent's specialty.\n</commentary>\n</example>\n\n<example>\nContext: A developer is getting privacy-related rejections from App Store review.\nuser: "Apple rejected my app for Guideline 5.1.1 privacy issues"\nassistant: "I'll use the privacy-compliance-reviewer agent to identify the specific privacy compliance gaps."\n<commentary>\nGuideline 5.1.1 rejections are privacy-related, matching this agent's focus area.\n</commentary>\n</example>\n\n<example>\nContext: The review-app command is dispatching agents.\nuser: "/apple-appstore-toolkit:review-app privacy"\nassistant: "I'll launch the privacy-compliance-reviewer agent to do a thorough privacy audit."\n<commentary>\nThe user requested a privacy-specific review.\n</commentary>\n</example>
 model: opus
 color: red
 tools: ["Read", "Glob", "Grep"]

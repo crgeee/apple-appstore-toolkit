@@ -1,34 +1,6 @@
 ---
 name: react-native-reviewer
-description: Use this agent when reviewing a React Native iOS app for App Store-specific issues including CodePush restrictions, Hermes engine, native splash screen, WebView-only detection, or native module permissions. Examples:
-
-  <example>
-  Context: A developer is submitting a React Native app to the App Store.
-  user: "Check my React Native app for App Store issues"
-  assistant: "I'll use the react-native-reviewer agent to check React Native-specific App Store requirements."
-  <commentary>
-  The user has a React Native app and wants App Store-specific validation.
-  </commentary>
-  </example>
-
-  <example>
-  Context: A React Native app was rejected and the developer suspects RN-specific issues.
-  user: "My React Native app was rejected, can you check for common RN gotchas?"
-  assistant: "I'll use the react-native-reviewer agent to check for CodePush issues, splash screen configuration, and other React Native-specific rejection causes."
-  <commentary>
-  React Native-specific App Store issues are this agent's specialty.
-  </commentary>
-  </example>
-
-  <example>
-  Context: The review-app command detected a React Native project.
-  user: "/apple-appstore-toolkit:review-app reactnative"
-  assistant: "I'll launch the react-native-reviewer agent to check React Native-specific App Store compliance."
-  <commentary>
-  The user explicitly requested the React Native review.
-  </commentary>
-  </example>
-
+description: Use this agent when reviewing a React Native iOS app for App Store-specific issues including CodePush restrictions, Hermes engine, native splash screen, WebView-only detection, or native module permissions. Examples:\n\n<example>\nContext: A developer is submitting a React Native app to the App Store.\nuser: "Check my React Native app for App Store issues"\nassistant: "I'll use the react-native-reviewer agent to check React Native-specific App Store requirements."\n<commentary>\nThe user has a React Native app and wants App Store-specific validation.\n</commentary>\n</example>\n\n<example>\nContext: A React Native app was rejected and the developer suspects RN-specific issues.\nuser: "My React Native app was rejected, can you check for common RN gotchas?"\nassistant: "I'll use the react-native-reviewer agent to check for CodePush issues, splash screen configuration, and other React Native-specific rejection causes."\n<commentary>\nReact Native-specific App Store issues are this agent's specialty.\n</commentary>\n</example>\n\n<example>\nContext: The review-app command detected a React Native project.\nuser: "/apple-appstore-toolkit:review-app reactnative"\nassistant: "I'll launch the react-native-reviewer agent to check React Native-specific App Store compliance."\n<commentary>\nThe user explicitly requested the React Native review.\n</commentary>\n</example>
 model: inherit
 color: red
 tools: ["Read", "Glob", "Grep"]
