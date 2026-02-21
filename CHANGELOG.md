@@ -2,6 +2,18 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## [0.2.2] - 2026-02-21
+
+### Changed
+
+- bump version to v0.2.1
+
+### Fixed
+
+- consolidated improvements from best-practices review
+- use RELEASE_TOKEN to push version bumps directly to main
+
+
 ## [0.2.1] - 2026-02-20
 
 ### Changed
