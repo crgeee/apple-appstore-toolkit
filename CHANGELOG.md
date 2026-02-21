@@ -2,6 +2,17 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## [0.2.3] - 2026-02-21
+
+### Changed
+
+- v0.2.2
+
+### Fixed
+
+- use "./" instead of "." for marketplace.json source field
+
+
 ## [0.2.2] - 2026-02-21
 
 ### Changed
