@@ -2,6 +2,17 @@
 
 All notable changes to this plugin will be documented in this file.
 
+## [0.2.4] - 2026-02-21
+
+### Changed
+
+- v0.2.3
+
+### Fixed
+
+- use single-line descriptions in agent frontmatter for color support
+
+
 ## [0.2.3] - 2026-02-21
 
 ### Changed
