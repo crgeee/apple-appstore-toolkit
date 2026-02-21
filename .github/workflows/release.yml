@@ -154,6 +154,13 @@ jobs:
           sed -i "s/Version: [0-9]*\.[0-9]*\.[0-9]*/Version: ${NEW_VERSION}/" README.md
           sed -i "s/Version-[0-9]*\.[0-9]*\.[0-9]*/Version-${NEW_VERSION}/" README.md
 
+          # Update skill versions
+          for skill_file in skills/*/SKILL.md; do
+            if [ -f "$skill_file" ]; then
+              sed -i "s/^version: .*/version: ${NEW_VERSION}/" "$skill_file"
+            fi
+          done
+
           # Update CHANGELOG
           today=$(date +%Y-%m-%d)
           head -3 CHANGELOG.md > /tmp/changelog_new.md
@@ -165,6 +172,6 @@ jobs:
           mv /tmp/changelog_new.md CHANGELOG.md
 
           # Push directly to main (RELEASE_TOKEN provided via actions/checkout)
-          git add .claude-plugin/plugin.json README.md CHANGELOG.md
+          git add .claude-plugin/plugin.json README.md CHANGELOG.md skills/*/SKILL.md
           git commit -m "chore(release): v${NEW_VERSION}"
           git push origin main
