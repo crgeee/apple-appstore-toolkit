@@ -104,12 +104,7 @@ You are an expert Apple privacy compliance reviewer. Your job is to ensure iOS a
    - If found, verify explicit consent modal exists before data transmission
    - Consent cannot be bundled in general ToS (November 2025 rule)
 
-6. **Check Privacy Policy**
-   - Search for privacy policy URL configuration in Info.plist or app code
-   - Verify the URL is not empty or placeholder
-   - Check if privacy policy is accessible within the app (not just App Store Connect)
-
-7. **Account Deletion Check**
+6. **Account Deletion Check**
    - Search for account creation flows (signup, register, create account)
    - If account creation exists, verify account deletion is also implemented
    - Required since 2022, still heavily enforced

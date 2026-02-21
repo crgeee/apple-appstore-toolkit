@@ -2,37 +2,49 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Plugin: Claude Code](https://img.shields.io/badge/Plugin-Claude%20Code-blueviolet)](https://claude.com/claude-code)
-[![Version: 0.1.0](https://img.shields.io/badge/Version-0.2.1-green)](CHANGELOG.md)
+[![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-green)](CHANGELOG.md)
 
 A Claude Code plugin that reviews iOS apps for Apple App Store readiness using 8 specialized review agents. Supports both **React Native** and **Swift/Xcode** projects.
+
+## Install
+
+In Claude Code, run:
+
+```
+/plugin marketplace add crgeee/apple-appstore-toolkit
+/plugin install apple-appstore-toolkit
+```
+
+Then navigate to your iOS project and run:
+
+```
+/apple-appstore-toolkit:review-app
+```
+
+<details>
+<summary>Alternative installation methods</summary>
+
+### Development / testing (session-only)
+
+```bash
+git clone https://github.com/crgeee/apple-appstore-toolkit.git
+claude --plugin-dir /path/to/apple-appstore-toolkit
+```
+
+This loads the plugin for a single session only — useful for development and testing.
+
+</details>
+
+### Prerequisites
+
+- [Claude Code](https://claude.com/claude-code) CLI installed
+- An iOS project (React Native or Swift/Xcode) in your working directory
 
 ## Why?
 
 Apple rejects approximately **25% of all App Store submissions** (1.93 million out of 7.77 million in 2024). The top causes — missing privacy manifests, incorrect Info.plist keys, absent restore-purchases buttons — are all detectable before you submit.
 
 This toolkit catches those issues during development so you don't waste days waiting for a rejection email.
-
-## Prerequisites
-
-- [Claude Code](https://claude.com/claude-code) CLI installed
-- An iOS project (React Native or Swift/Xcode) in your working directory
-
-## Quick Start
-
-```bash
-# Clone the plugin
-git clone https://github.com/crgeee/apple-appstore-toolkit.git
-
-# Run Claude Code with the plugin against your iOS project
-cd /path/to/your-ios-app
-claude --plugin-dir /path/to/apple-appstore-toolkit
-```
-
-Then run the review:
-
-```
-/apple-appstore-toolkit:review-app
-```
 
 ## How It Works
 
@@ -72,6 +84,8 @@ Each agent runs independently with its own scope, then results are combined by s
 | `iap-compliance-reviewer` | StoreKit, restore purchases, subscription terms, external payment detection |
 | `security-reviewer` | Code signing, hardcoded secrets, data protection, keychain, provisioning |
 | `react-native-reviewer` | CodePush, Hermes engine, native splash screen, WebView-only detection |
+
+> **Note:** The `privacy-compliance-reviewer` uses Claude Opus for higher accuracy on complex privacy manifest analysis. All other agents inherit the model you're running Claude Code with.
 
 ## Usage
 
@@ -170,21 +184,6 @@ Based on Apple's published rejection data and current App Store Review Guideline
 - **Swift / Xcode** — native iOS apps
 
 The toolkit automatically detects the project type by scanning for `package.json` (React Native), `app.json` (Expo), or `.xcodeproj`/`.xcworkspace` (native).
-
-## Installation
-
-### Option 1: Clone and reference
-
-```bash
-git clone https://github.com/crgeee/apple-appstore-toolkit.git
-claude --plugin-dir /path/to/apple-appstore-toolkit
-```
-
-### Option 2: Add to your project
-
-```bash
-git clone https://github.com/crgeee/apple-appstore-toolkit.git /path/to/your-project/.claude-plugins/apple-appstore-toolkit
-```
 
 ## Guidelines Coverage
 

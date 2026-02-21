@@ -105,6 +105,17 @@ When Apple updates their Review Guidelines:
 5. Commit as `feat: update to [month year] App Store Review Guidelines`
 6. Open PR, merge — automated MINOR release
 
+## Repository Secrets
+
+The release workflow requires one secret:
+
+- **`RELEASE_TOKEN`**: A GitHub fine-grained personal access token (PAT) with `contents: write` permission on this repository. Used by the release workflow to push version bump commits directly to `main` (bypassing branch protection rules that block `GITHUB_TOKEN`).
+
+To create or rotate:
+1. Go to GitHub → Settings → Developer settings → Fine-grained personal access tokens
+2. Create a token scoped to `crgeee/apple-appstore-toolkit` with **Contents: Read and write** permission
+3. Add it as a repository secret named `RELEASE_TOKEN` at Settings → Secrets and variables → Actions
+
 ## Pre-Merge Checklist
 
 Before merging any PR:
