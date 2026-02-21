@@ -216,6 +216,10 @@ Releases are fully automated — `feat:` commits trigger a MINOR release, `fix:`
 - React Native library-specific checks
 - Expo-specific configuration validation
 
+## See Also
+
+- **[Google Play Store Toolkit](https://github.com/crgeee/google-playstore-toolkit)** — Sister plugin for Google Play Store readiness review. Uses the same multi-agent architecture to review Android, React Native, and Expo apps.
+
 ## License
 
 [MIT](LICENSE)
