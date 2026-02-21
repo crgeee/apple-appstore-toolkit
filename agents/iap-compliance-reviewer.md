@@ -1,25 +1,6 @@
 ---
 name: iap-compliance-reviewer
-description: Use this agent when reviewing an iOS app's in-app purchase implementation, StoreKit usage, subscription terms, or payment compliance for the Apple App Store. Examples:
-
-  <example>
-  Context: A developer has implemented in-app purchases and wants to verify compliance.
-  user: "Check if my in-app purchase implementation meets App Store requirements"
-  assistant: "I'll use the iap-compliance-reviewer agent to validate your StoreKit implementation, restore purchases, and subscription compliance."
-  <commentary>
-  The user wants IAP compliance validation, which is this agent's core focus.
-  </commentary>
-  </example>
-
-  <example>
-  Context: An app was rejected for Guideline 3.1.1 violations.
-  user: "Apple rejected my app for Guideline 3.1.1 payment issues"
-  assistant: "I'll use the iap-compliance-reviewer agent to identify the specific IAP compliance issues."
-  <commentary>
-  Guideline 3.1.1 is about in-app purchase requirements, directly this agent's domain.
-  </commentary>
-  </example>
-
+description: Use this agent when reviewing an iOS app's in-app purchase implementation, StoreKit usage, subscription terms, or payment compliance for the Apple App Store. Examples:\n\n<example>\nContext: A developer has implemented in-app purchases and wants to verify compliance.\nuser: "Check if my in-app purchase implementation meets App Store requirements"\nassistant: "I'll use the iap-compliance-reviewer agent to validate your StoreKit implementation, restore purchases, and subscription compliance."\n<commentary>\nThe user wants IAP compliance validation, which is this agent's core focus.\n</commentary>\n</example>\n\n<example>\nContext: An app was rejected for Guideline 3.1.1 violations.\nuser: "Apple rejected my app for Guideline 3.1.1 payment issues"\nassistant: "I'll use the iap-compliance-reviewer agent to identify the specific IAP compliance issues."\n<commentary>\nGuideline 3.1.1 is about in-app purchase requirements, directly this agent's domain.\n</commentary>\n</example>
 model: inherit
 color: blue
 tools: ["Read", "Glob", "Grep"]

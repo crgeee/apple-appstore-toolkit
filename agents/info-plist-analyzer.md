@@ -1,34 +1,6 @@
 ---
 name: info-plist-analyzer
-description: Use this agent when reviewing an iOS app's Info.plist configuration, entitlements, background modes, or launch screen setup for App Store compliance. Examples:
-
-  <example>
-  Context: A developer is preparing their iOS app for App Store submission.
-  user: "Can you check if my Info.plist is set up correctly for the App Store?"
-  assistant: "I'll use the info-plist-analyzer agent to review your Info.plist configuration for App Store compliance."
-  <commentary>
-  The user explicitly wants Info.plist validation, so trigger the info-plist-analyzer agent.
-  </commentary>
-  </example>
-
-  <example>
-  Context: The review-app command is running an App Store readiness review.
-  user: "/apple-appstore-toolkit:review-app plist"
-  assistant: "I'll launch the info-plist-analyzer agent to check your Info.plist, entitlements, and background modes."
-  <commentary>
-  The user requested a plist-specific review via the orchestration command.
-  </commentary>
-  </example>
-
-  <example>
-  Context: A developer is getting ITMS errors when uploading to App Store Connect.
-  user: "I keep getting ITMS-90078 and ITMS-90474 errors when uploading my app"
-  assistant: "Those are Info.plist configuration errors. Let me use the info-plist-analyzer agent to diagnose the issues."
-  <commentary>
-  ITMS errors relate to Info.plist and entitlements configuration, which this agent specializes in.
-  </commentary>
-  </example>
-
+description: Use this agent when reviewing an iOS app's Info.plist configuration, entitlements, background modes, or launch screen setup for App Store compliance. Examples:\n\n<example>\nContext: A developer is preparing their iOS app for App Store submission.\nuser: "Can you check if my Info.plist is set up correctly for the App Store?"\nassistant: "I'll use the info-plist-analyzer agent to review your Info.plist configuration for App Store compliance."\n<commentary>\nThe user explicitly wants Info.plist validation, so trigger the info-plist-analyzer agent.\n</commentary>\n</example>\n\n<example>\nContext: The review-app command is running an App Store readiness review.\nuser: "/apple-appstore-toolkit:review-app plist"\nassistant: "I'll launch the info-plist-analyzer agent to check your Info.plist, entitlements, and background modes."\n<commentary>\nThe user requested a plist-specific review via the orchestration command.\n</commentary>\n</example>\n\n<example>\nContext: A developer is getting ITMS errors when uploading to App Store Connect.\nuser: "I keep getting ITMS-90078 and ITMS-90474 errors when uploading my app"\nassistant: "Those are Info.plist configuration errors. Let me use the info-plist-analyzer agent to diagnose the issues."\n<commentary>\nITMS errors relate to Info.plist and entitlements configuration, which this agent specializes in.\n</commentary>\n</example>
 model: inherit
 color: cyan
 tools: ["Read", "Glob", "Grep"]

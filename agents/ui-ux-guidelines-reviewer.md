@@ -1,25 +1,6 @@
 ---
 name: ui-ux-guidelines-reviewer
-description: Use this agent when reviewing an iOS app's UI/UX compliance with Apple's Human Interface Guidelines, accessibility, Dynamic Type, touch targets, or iPad multitasking support. Examples:
-
-  <example>
-  Context: A developer wants to verify their app follows Apple's HIG.
-  user: "Does my app follow Apple's Human Interface Guidelines?"
-  assistant: "I'll use the ui-ux-guidelines-reviewer agent to check HIG compliance, accessibility, and UI requirements."
-  <commentary>
-  The user wants HIG compliance validation, which is this agent's focus area.
-  </commentary>
-  </example>
-
-  <example>
-  Context: A developer is worried about Guideline 4.0 design rejections.
-  user: "Apple rejected my app for design issues, can you help identify what's wrong?"
-  assistant: "I'll use the ui-ux-guidelines-reviewer agent to analyze your app's UI for HIG violations and design issues."
-  <commentary>
-  Guideline 4.0 rejections relate to design and UI quality, matching this agent's expertise.
-  </commentary>
-  </example>
-
+description: Use this agent when reviewing an iOS app's UI/UX compliance with Apple's Human Interface Guidelines, accessibility, Dynamic Type, touch targets, or iPad multitasking support. Examples:\n\n<example>\nContext: A developer wants to verify their app follows Apple's HIG.\nuser: "Does my app follow Apple's Human Interface Guidelines?"\nassistant: "I'll use the ui-ux-guidelines-reviewer agent to check HIG compliance, accessibility, and UI requirements."\n<commentary>\nThe user wants HIG compliance validation, which is this agent's focus area.\n</commentary>\n</example>\n\n<example>\nContext: A developer is worried about Guideline 4.0 design rejections.\nuser: "Apple rejected my app for design issues, can you help identify what's wrong?"\nassistant: "I'll use the ui-ux-guidelines-reviewer agent to analyze your app's UI for HIG violations and design issues."\n<commentary>\nGuideline 4.0 rejections relate to design and UI quality, matching this agent's expertise.\n</commentary>\n</example>
 model: inherit
 color: magenta
 tools: ["Read", "Glob", "Grep"]
