@@ -1,25 +1,6 @@
 ---
 name: assets-metadata-reviewer
-description: Use this agent when reviewing an iOS app's app icons, asset catalog, metadata, or submission readiness for the Apple App Store. Examples:
-
-  <example>
-  Context: A developer is preparing app assets for App Store submission.
-  user: "Are my app icons and assets ready for the App Store?"
-  assistant: "I'll use the assets-metadata-reviewer agent to validate your app icons, asset catalog, and metadata."
-  <commentary>
-  The user wants asset and metadata validation, which is this agent's specialty.
-  </commentary>
-  </example>
-
-  <example>
-  Context: A developer is getting icon-related ITMS errors.
-  user: "I'm getting ITMS-90717 error about my app icon"
-  assistant: "That's an alpha channel issue with your app icon. I'll use the assets-metadata-reviewer agent to check your icon configuration."
-  <commentary>
-  ITMS-90717 is an icon format error, directly in this agent's scope.
-  </commentary>
-  </example>
-
+description: Use this agent when reviewing an iOS app's app icons, asset catalog, metadata, or submission readiness for the Apple App Store. Examples:\n\n<example>\nContext: A developer is preparing app assets for App Store submission.\nuser: "Are my app icons and assets ready for the App Store?"\nassistant: "I'll use the assets-metadata-reviewer agent to validate your app icons, asset catalog, and metadata."\n<commentary>\nThe user wants asset and metadata validation, which is this agent's specialty.\n</commentary>\n</example>\n\n<example>\nContext: A developer is getting icon-related ITMS errors.\nuser: "I'm getting ITMS-90717 error about my app icon"\nassistant: "That's an alpha channel issue with your app icon. I'll use the assets-metadata-reviewer agent to check your icon configuration."\n<commentary>\nITMS-90717 is an icon format error, directly in this agent's scope.\n</commentary>\n</example>
 model: inherit
 color: green
 tools: ["Read", "Glob", "Grep", "Bash"]

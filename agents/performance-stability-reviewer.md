@@ -1,25 +1,6 @@
 ---
 name: performance-stability-reviewer
-description: Use this agent when reviewing an iOS app's network configuration, App Transport Security, IPv6 compatibility, or performance characteristics for App Store compliance. Examples:
-
-  <example>
-  Context: A developer wants to ensure their network configuration passes App Store review.
-  user: "Check if my app's network and ATS configuration is correct"
-  assistant: "I'll use the performance-stability-reviewer agent to check App Transport Security, IPv6 compatibility, and network configuration."
-  <commentary>
-  Network and ATS configuration review is this agent's core responsibility.
-  </commentary>
-  </example>
-
-  <example>
-  Context: An app is being rejected for network-related issues.
-  user: "My app keeps getting rejected and I think it's related to HTTP connections"
-  assistant: "I'll use the performance-stability-reviewer agent to identify insecure network connections and ATS violations."
-  <commentary>
-  HTTP connection issues relate to ATS compliance, which this agent specializes in.
-  </commentary>
-  </example>
-
+description: Use this agent when reviewing an iOS app's network configuration, App Transport Security, IPv6 compatibility, or performance characteristics for App Store compliance. Examples:\n\n<example>\nContext: A developer wants to ensure their network configuration passes App Store review.\nuser: "Check if my app's network and ATS configuration is correct"\nassistant: "I'll use the performance-stability-reviewer agent to check App Transport Security, IPv6 compatibility, and network configuration."\n<commentary>\nNetwork and ATS configuration review is this agent's core responsibility.\n</commentary>\n</example>\n\n<example>\nContext: An app is being rejected for network-related issues.\nuser: "My app keeps getting rejected and I think it's related to HTTP connections"\nassistant: "I'll use the performance-stability-reviewer agent to identify insecure network connections and ATS violations."\n<commentary>\nHTTP connection issues relate to ATS compliance, which this agent specializes in.\n</commentary>\n</example>
 model: inherit
 color: yellow
 tools: ["Read", "Glob", "Grep"]
